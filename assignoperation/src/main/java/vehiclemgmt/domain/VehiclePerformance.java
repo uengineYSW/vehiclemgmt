@@ -79,18 +79,12 @@ public class VehiclePerformance {
     public void distanceCalculation(
         DistanceCalculationCommand distanceCalculationCommand
     ) {
-        try {
-            this.accumulatedDistanceBefore =
-                distanceCalculationCommand.getAccumulatedDistanceBefore();
-            this.accumulatedDistanceAfter =
-                distanceCalculationCommand.getAccumulatedDistanceAfter();
-            this.drivingDistance =
-                (double) (
-                    this.accumulatedDistanceAfter -
-                    this.accumulatedDistanceBefore
-                );
-        } catch (Exception e) {
-            throw new RuntimeException("Distance Calculation failed", e);
-        }
+        this.drivingDistance =
+            (double) (
+                distanceCalculationCommand.getAccumulatedDistanceAfter() -
+                distanceCalculationCommand.getAccumulatedDistanceBefore()
+            );
+        PerformanceModified performanceModified = new PerformanceModified(this);
+        performanceModified.publishAfterCommit();
     }
 }
